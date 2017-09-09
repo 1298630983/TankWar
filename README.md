@@ -36,3 +36,8 @@
 ## Release 0.8
 - 添加子弹类（与Tank类似）
 - 在TankClient中添加一发子弹测试
+## Release 0.9
+- 创建炮筒，根据炮筒方向打出子弹
+  1. 增加ctrl按键发射炮弹
+  2. 使用fire方法，返回Missile
+  3. 新增prDir属性，每次move后根据tank方向确定炮筒方向，炮筒用直线表示（drawLine）
