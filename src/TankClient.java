@@ -6,6 +6,9 @@ import java.awt.event.WindowEvent;
  * Created by Jason on 2017/9/8.
  */
 public class TankClient extends Frame{
+    public static final int GAME_WIDTH = 800;
+    public static final int GAME_HEIGHT = 600;
+
     int x = 50 , y = 50;
     Image offScreenImage = null;
 
@@ -14,7 +17,7 @@ public class TankClient extends Frame{
     }
 
     public void lanuchFrame() {
-        setBounds(x,y,800,600);
+        setBounds(x,y,GAME_WIDTH,GAME_HEIGHT);
         setResizable(false);
         setTitle("TankWar");
         setBackground(Color.green);
@@ -41,12 +44,12 @@ public class TankClient extends Frame{
     @Override
     public void update(Graphics g) {
         if (offScreenImage == null) {
-            offScreenImage = this.createImage(800,600);
+            offScreenImage = this.createImage(GAME_WIDTH,GAME_HEIGHT);
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
         Color c = gOffScreen.getColor();
         gOffScreen.setColor(Color.green);
-        gOffScreen.fillRect(0,0,800,600);
+        gOffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
         gOffScreen.setColor(c);
         paint(gOffScreen);
         g.drawImage(offScreenImage,0,0,null);
