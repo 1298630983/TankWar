@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -27,6 +29,7 @@ public class TankClient extends Frame{
                 System.exit(0);
             }
         });
+        addKeyListener(new KeyMonitor());
         setVisible(true);
         new Thread(new PaintThread()).start();
     }
@@ -37,8 +40,6 @@ public class TankClient extends Frame{
         g.setColor(Color.red);
         g.fillOval(x,y,30,30);
         g.setColor(c);
-
-        y += 5;
     }
 
     @Override
@@ -66,6 +67,23 @@ public class TankClient extends Frame{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+        }
+    }
+
+    private class KeyMonitor extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            switch (key) {
+                case KeyEvent.VK_LEFT :
+                    x -= 5;break;
+                case KeyEvent.VK_RIGHT :
+                    x += 5;break;
+                case KeyEvent.VK_UP :
+                    y -= 5;break;
+                case KeyEvent.VK_DOWN :
+                    y += 5;break;
             }
         }
     }

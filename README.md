@@ -19,3 +19,7 @@
 - 代码重构
   - 将今后需要多次修改的量定义为常量（如Frame的宽和高） 
   - 常量使用public static final定义
+## Release 0.5
+- 让坦克听从指挥
+  - 添加KeyMonitor键盘监听器类
+  - KeyClient添加键盘监听器
