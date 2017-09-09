@@ -41,3 +41,11 @@
   1. 增加ctrl按键发射炮弹
   2. 使用fire方法，返回Missile
   3. 新增prDir属性，每次move后根据tank方向确定炮筒方向，炮筒用直线表示（drawLine）
+## Release 1.0
+- 打出多发炮弹
+  - 使用容器放炮弹
+  - 每当抬起ctrl时装弹，逐一画出炮弹
+- 解决炮弹不消亡的问题
+  - 加入炮弹的生死量live（missile）
+  - 当炮弹飞出边界就remove
+- 解决坦克出界问题

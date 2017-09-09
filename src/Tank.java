@@ -1,5 +1,3 @@
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
@@ -104,14 +102,15 @@ public class Tank {
         if (this.dir != Direction.STOP) {
             this.ptDir = this.dir;
         }
+        if (x < 0) x = 0;
+        if (y < 30) y = 30;
+        if (x + Tank.WIDTH > TankClient.GAME_WIDTH) x = TankClient.GAME_WIDTH - Tank.WIDTH;
+        if (y + Tank.HEIGHT > TankClient.GAME_HEIGHT) y = TankClient.GAME_HEIGHT - Tank.WIDTH;
     }
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key) {
-            case KeyEvent.VK_CONTROL :
-                tc.m = fire();
-                break;
             case KeyEvent.VK_LEFT :
                 bL = true;
                 break;
@@ -131,6 +130,9 @@ public class Tank {
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key) {
+            case KeyEvent.VK_CONTROL :
+                tc.missiles.add(fire());
+                break;
             case KeyEvent.VK_LEFT:
                 bL = false;
                 break;
@@ -162,7 +164,7 @@ public class Tank {
     public Missile fire() {
         int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT;
-        Missile m = new Missile(x, y, ptDir);
+        Missile m = new Missile(x, y, ptDir, this.tc);
         return m;
     }
 }
