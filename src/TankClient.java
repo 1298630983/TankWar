@@ -14,6 +14,7 @@ public class TankClient extends Frame{
         setBounds(100,100,800,600);
         setResizable(false);
         setTitle("TankWar");
+        setBackground(Color.green);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -23,4 +24,11 @@ public class TankClient extends Frame{
         setVisible(true);
     }
 
+    @Override
+    public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.red);
+        g.fillOval(50,50,30,30);
+        g.setColor(c);
+    }
 }
