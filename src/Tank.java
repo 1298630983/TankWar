@@ -10,7 +10,11 @@ public class Tank {
     public static final int WIDTH = 30;
     public static final int HEIGHT = 30;
 
+    private boolean live = true;
+
     TankClient tc;
+
+    private boolean good;
 
     private int x, y;
     private boolean bL = false, bU = false, bR = false, bD = false;
@@ -20,19 +24,22 @@ public class Tank {
     private Direction dir = Direction.STOP;
     private Direction ptDir = Direction.D;
 
-    public Tank(int x, int y) {
+    public Tank(int x, int y, boolean good) {
         this.x = x;
         this.y = y;
+        this.good = good;
     }
 
-    public Tank(int x, int y,TankClient tc) {
-        this(x, y);
+    public Tank(int x, int y, boolean good, TankClient tc) {
+        this(x, y,good);
         this.tc = tc;
     }
 
     public void draw(Graphics g) {
+        if (!live) return;
         Color c = g.getColor();
-        g.setColor(Color.red);
+        if (good) g.setColor(Color.red);
+        else g.setColor(Color.blue);
         g.fillOval(x, y, WIDTH, HEIGHT);
         g.setColor(c);
 
@@ -166,5 +173,17 @@ public class Tank {
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT;
         Missile m = new Missile(x, y, ptDir, this.tc);
         return m;
+    }
+
+    public Rectangle getRect() {
+        return new Rectangle(x, y, WIDTH, HEIGHT);
+    }
+
+    public boolean isLive() {
+        return live;
+    }
+
+    public void setLive(boolean live) {
+        this.live = live;
     }
 }

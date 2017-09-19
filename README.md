@@ -49,3 +49,11 @@
   - 加入炮弹的生死量live（missile）
   - 当炮弹飞出边界就remove
 - 解决坦克出界问题
+## Release 1.1
+- 画出一个敌方坦克
+  - 加入区别敌我的量good并设置敌方为蓝色
+  - 更新tank构造函数，加入good
+- 击毙敌方坦克
+  - Missle类中加入hitTank(Tank)方法，返回boolean
+  - 碰撞检测的辅助类Rectangle，为Tank和Missle加入getRect()
+  - 当坦克被击毙时，坦克和子弹都消失

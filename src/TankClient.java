@@ -13,7 +13,9 @@ public class TankClient extends Frame{
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
-    Tank myTank = new Tank(50,50, this);
+    Tank myTank = new Tank(50,50, true, this);
+    Tank enemyTank = new Tank(100,100,false,this);
+
     List<Missile> missiles = new ArrayList<Missile>();
     Image offScreenImage = null;
 
@@ -42,8 +44,10 @@ public class TankClient extends Frame{
         g.drawString("missiles counts : " + missiles.size(),60,60);
 
         myTank.draw(g);
+        enemyTank.draw(g);
         for (int i = 0; i < missiles.size(); i++) {
             Missile m = missiles.get(i);
+            m.hitTank(enemyTank);
             m.draw(g);
             //if (!m.isLive()) missiles.remove(m);
             //else m.draw(g);
