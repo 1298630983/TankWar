@@ -13,10 +13,14 @@ public class TankClient extends Frame{
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
-    Tank myTank = new Tank(50,50, true, this);
-    Tank enemyTank = new Tank(100,100,false,this);
+    Tank myTank = new Tank(50,50,true, Tank.Direction.STOP,this);
+
+    Explode e = new Explode(70,70,this);
 
     List<Missile> missiles = new ArrayList<Missile>();
+    List<Explode> explodes = new ArrayList<Explode>();
+    List<Tank> tanks = new ArrayList<Tank>();
+
     Image offScreenImage = null;
 
     public static void main(String[] args) {
@@ -24,6 +28,9 @@ public class TankClient extends Frame{
     }
 
     public void lanuchFrame() {
+        for (int i = 0; i < 10; i++) {
+            tanks.add(new Tank(50 + 40*(i + 1), 50,false, Tank.Direction.D,this));
+        }
         setBounds(400,300,GAME_WIDTH,GAME_HEIGHT);
         setResizable(false);
         setTitle("TankWar");
@@ -42,15 +49,27 @@ public class TankClient extends Frame{
     @Override
     public void paint(Graphics g) {
         g.drawString("missiles counts : " + missiles.size(),60,60);
+        g.drawString("explode counts : " + explodes.size(), 60,70);
+        g.drawString("tanks counts : " + tanks.size(), 60, 80);
 
         myTank.draw(g);
-        enemyTank.draw(g);
         for (int i = 0; i < missiles.size(); i++) {
             Missile m = missiles.get(i);
-            m.hitTank(enemyTank);
+            m.hitTank(myTank);
+            m.hitTanks(tanks);
             m.draw(g);
             //if (!m.isLive()) missiles.remove(m);
             //else m.draw(g);
+        }
+
+        for (int i = 0; i < explodes.size(); i++) {
+            Explode e = explodes.get(i);
+            e.draw(g);
+        }
+
+        for (int i = 0; i < tanks.size(); i++) {
+            Tank t = tanks.get(i);
+            t.draw(g);
         }
     }
 
