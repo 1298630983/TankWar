@@ -158,6 +158,11 @@ public class Tank {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key) {
+            case KeyEvent.VK_F2 :
+                if (!this.live) {
+                    this.live = true;
+                    this.life = 100;
+                }break;
             case KeyEvent.VK_LEFT :
                 bL = true;
                 break;
@@ -291,5 +296,14 @@ public class Tank {
             g.fillRect(x, y-10, w, 10);
             g.setColor(c);
         }
+    }
+
+    public boolean eat(Blood b) {
+        if (this.live && b.isLive() && this.getRect().intersects(b.getRec())) {
+            this.life = 100;
+            b.setLive(false);
+            return true;
+        }
+        return false;
     }
 }

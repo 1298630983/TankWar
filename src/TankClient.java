@@ -25,6 +25,8 @@ public class TankClient extends Frame{
 
     Image offScreenImage = null;
 
+    Blood b = new Blood();
+
     public static void main(String[] args) {
         new TankClient().lanuchFrame();
     }
@@ -55,9 +57,17 @@ public class TankClient extends Frame{
         g.drawString("tanks counts : " + tanks.size(), 60, 80);
         g.drawString("tanks life : " + myTank.getLife(), 60,90);
 
+        if (tanks.size() <= 0) {
+            for (int i = 0; i < 5; i++) {
+                tanks.add(new Tank(50 + 40*(i + 1), 50,false, Tank.Direction.D,this));
+            }
+        }
+
         myTank.draw(g);
+        myTank.eat(b);
         w1.draw(g);
         w2.draw(g);
+        b.draw(g);
         for (int i = 0; i < missiles.size(); i++) {
             Missile m = missiles.get(i);
             m.hitTank(myTank);
