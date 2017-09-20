@@ -13,6 +13,10 @@ public class Tank {
 
     private boolean live = true;
 
+    private int life = 100;
+
+    private BloodBar bb = new BloodBar();
+
     TankClient tc;
 
     private boolean good;
@@ -57,6 +61,8 @@ public class Tank {
         else g.setColor(Color.blue);
         g.fillOval(x, y, WIDTH, HEIGHT);
         g.setColor(c);
+
+        if (good) bb.draw(g);
 
         switch (ptDir) {
             case L:
@@ -268,4 +274,22 @@ public class Tank {
         }
     }
 
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    private class BloodBar {
+        public void draw(Graphics g) {
+            Color c = g.getColor();
+            g.setColor(Color.red);
+            g.drawRect(x, y-10, WIDTH, 10 );
+            int w = WIDTH * life/100;
+            g.fillRect(x, y-10, w, 10);
+            g.setColor(c);
+        }
+    }
 }
