@@ -1,6 +1,6 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Jason on 2017/9/9.
@@ -18,6 +18,7 @@ public class Tank {
     private boolean good;
 
     private int x, y;
+    private int oldX, oldY;
 
     private static Random r = new Random();
 
@@ -33,6 +34,8 @@ public class Tank {
     public Tank(int x, int y, boolean good) {
         this.x = x;
         this.y = y;
+        this.oldX = x;
+        this.oldY = y;
         this.good = good;
     }
 
@@ -85,6 +88,9 @@ public class Tank {
     }
 
     public void move() {
+        this.oldX = x;
+        this.oldY = y;
+
         switch (dir) {
             case L:
                 x -= XSPEED;
@@ -138,6 +144,11 @@ public class Tank {
         }
     }
 
+    private void stay() {
+        x = oldX;
+        y = oldY;
+    }
+
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key) {
@@ -174,6 +185,9 @@ public class Tank {
                 break;
             case KeyEvent.VK_DOWN:
                 bD = false;
+                break;
+            case KeyEvent.VK_A:
+                superFire();
                 break;
         }
         locateDirection();
@@ -214,6 +228,44 @@ public class Tank {
 
     public boolean isGood() {
         return good;
+    }
+
+    public boolean collidesWithWall(Wall w) {
+        if (this.live && this.getRect().intersects(w.getRect())) {
+            this.stay();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean collidesWithTanks(java.util.List<Tank> tanks) {
+        for (int i = 0; i < tanks.size(); i++) {
+            Tank t = tanks.get(i);
+            if (this != t) {
+                if (this.live && t.isLive() && this.getRect().intersects(t.getRect())) {
+                    this.stay();
+                    t.stay();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Missile fire(Direction dir) {
+        if (!live) return null;
+        int x = this.x + Tank.WIDTH/2 - Missile.WIDTH/2;
+        int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT;
+        Missile m = new Missile(x, y, good, dir, this.tc);
+        tc.missiles.add(m);
+        return m;
+    }
+
+    public void superFire() {
+        Direction[] dirs = Direction.values();
+        for (int i = 0; i < 8; i++) {
+             fire(dirs[i]);
+        }
     }
 
 }

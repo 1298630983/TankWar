@@ -17,6 +17,8 @@ public class TankClient extends Frame{
 
     Explode e = new Explode(70,70,this);
 
+    Wall w1 = new Wall(100,200,20,150,this), w2 = new Wall(300,100,300,20,this);
+
     List<Missile> missiles = new ArrayList<Missile>();
     List<Explode> explodes = new ArrayList<Explode>();
     List<Tank> tanks = new ArrayList<Tank>();
@@ -53,10 +55,14 @@ public class TankClient extends Frame{
         g.drawString("tanks counts : " + tanks.size(), 60, 80);
 
         myTank.draw(g);
+        w1.draw(g);
+        w2.draw(g);
         for (int i = 0; i < missiles.size(); i++) {
             Missile m = missiles.get(i);
             m.hitTank(myTank);
             m.hitTanks(tanks);
+            m.hitWall(w1);
+            m.hitWall(w2);
             m.draw(g);
             //if (!m.isLive()) missiles.remove(m);
             //else m.draw(g);
@@ -69,6 +75,9 @@ public class TankClient extends Frame{
 
         for (int i = 0; i < tanks.size(); i++) {
             Tank t = tanks.get(i);
+            t.collidesWithWall(w1);
+            t.collidesWithWall(w2);
+            t.collidesWithTanks(tanks);
             t.draw(g);
         }
     }
